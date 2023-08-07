@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "AvailableCars";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="container">
+    <h4>MÜSAİT ARAÇLAR</h4>
+    <hr />
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center">
+                <th>ID</th>
+                <th>License Plate</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Product Year</th>
+                <th>Color</th>
+                <th>Km</th>
+                <th>Car Type</th>
+                <th>Rent State</th>
+                <th>Daily Price</th>
+                @*<th>Güncelle</th>
+                <th>Sil</th>*@
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                if (x.RentState == 0)
+                {
+                    <tr class="text-center">
+                        <td>@x.Id</td>
+                        <td>@x.LicensePlate</td>
+                        <td>@x.Brand</td>
+                        <td>@x.Model</td>
+                        <td>@x.ProductYear</td>
+                        <td>@x.Color</td>
+                        <td>@x.km</td>
+                        <td>@x.CarType</td>
+                        <td>@x.RentState</td>
+                        <td>@x.DailyPrice</td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+</div>
+
+

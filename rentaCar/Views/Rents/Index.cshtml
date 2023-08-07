@@ -1,0 +1,69 @@
+﻿@using rentaCar.Models.Entities
+@model IEnumerable<rentaCar.Models.Entities.rent>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    WebGrid grid = new WebGrid(Model);
+}
+
+<div class="container">
+    @grid.GetHtml(
+        tableStyle: "table-bordered col-md-12 text-center",
+        columns: grid.Columns(
+                grid.Column("Id", "ID"),
+                grid.Column("CarId", "Car ID"),
+                grid.Column("CustomerId", "Customer ID"),
+                grid.Column("Day", "Gün"),
+                grid.Column("RentalDate", "Kiralama Tarihi"),
+                grid.Column("ReturnDate", "Dönüş Tarihi"),
+                grid.Column("Note", "Not"),
+                grid.Column("Düzenle", format: @<text> <a href="/Rents/GetRent/@item.Id" class="btn btn-info">Düzenle</a> </text>),
+grid.Column("Sil", format: @<text> <a href="/Rents/DeleteRent/@item.Id" class="btn btn-danger">Sil</a> </text>)
+)
+)
+    <a href="/Rents/NewRent/" class="btn btn-success">Yeni Kiralama</a>
+
+
+</div>
+
+
+@*<div class="container">
+    <h4>KİRALAMALAR</h4>
+    <hr />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CUSTOMER ID</th>
+                <th>CAR ID</th>
+                <th>DAY</th>
+                <th>RENTAL DATE</th>
+                <th>RETURN DATE</th>
+                <th>NOTE</th>
+                <th>DÜZENLE</th>
+                <th>KALDIR</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var x in Model)
+            {
+                <tr class="text-center">
+                    <td>@x.Id</td>
+                    <td>@x.CustomerId</td>
+                    <td>@x.CarId</td>
+                    <td>@x.Day</td>
+                    <td>@x.RentalDate</td>
+                    <td>@x.ReturnDate</td>
+                    <td>@x.Note</td>
+                    <td>
+                        <a href="/rents/GetRent/@x.Id" class="btn btn-info">DÜZENLE</a>
+                    </td>
+                    <td>
+                        <a href="/rents/DeleteRent/@x.Id" class="btn btn-danger">SİL</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/rents/NewRent/" class="btn btn-success">Yeni Kiralama</a>
+</div>*@

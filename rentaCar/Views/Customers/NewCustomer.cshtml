@@ -1,0 +1,64 @@
+﻿@model rentaCar.Models.Entities.customers
+@{
+    ViewBag.Title = "NewCustomer";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="container">
+    <h4>YENİ MÜŞTERİ</h4>
+    <hr />
+    <form class="form-horizontal" method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2">TC</label>
+            <div class="col-sm-5">
+                @*<input type="text" class="form-control" name="IdentitiyNumber" />*@
+                @Html.TextBoxFor(m=>m.IdentitiyNumber, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m=>m.IdentitiyNumber,"",new {@class="text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Ad Soyad</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="FullName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Telefon</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Phone" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Adres</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Adress" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Mail</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="Mail" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Ehliyet No</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="DriverLicenseNo" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-info">Ekle</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+

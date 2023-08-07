@@ -1,0 +1,59 @@
+﻿@model rentaCar.Models.Entities.rent
+@{
+    ViewBag.Title = "GetRent";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditRent", "rent", FormMethod.Post))
+{
+    <div class="container">
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(k => k.Id, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.Id, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.CustomerId, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.CustomerId, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.CarId, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.CarId, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.Day, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.Day, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.RentalDate, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.RentalDate, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.ReturnDate, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.ReturnDate, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(k => k.Note, new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5">
+                    @Html.TextBoxFor(k => k.Note, new { @class = "form-control" })
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+}

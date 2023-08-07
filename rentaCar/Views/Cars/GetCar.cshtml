@@ -1,0 +1,95 @@
+﻿@model rentaCar.Models.Entities.cars
+@{
+    ViewBag.Title = "GetCar";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditCar", "Cars", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <h4>ARAÇ DÜZENLE</h4>
+        <hr />
+        <div class="form-group">
+            <label class="control-label col-sm-2">ID</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.Id, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Plaka</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.LicensePlate, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Marka</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.Brand, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Model</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.Model, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Yıl</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.ProductYear, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Renk</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.Color, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">KM</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.km, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Araç Tipi</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.CarType, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Kira Uygunluk</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.RentState, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Günlük Ücret</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @Html.TextBoxFor(k => k.DailyPrice, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-warning">Güncelle</button>
+        </div>
+    </div>
+
+
+
+}
+
