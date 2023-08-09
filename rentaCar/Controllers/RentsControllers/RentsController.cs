@@ -63,6 +63,9 @@ namespace rentaCar.Controllers
                                                        Value = i.Id.ToString(),
                                                    }).ToList();
             ViewBag.valueCustomer = valuesCustomer;
+
+            var values = db.cars.ToList();
+            ViewBag.values = values;
             return View();
         }
 
@@ -70,10 +73,12 @@ namespace rentaCar.Controllers
 
         public ActionResult NewRent(rent rent)
         {
+            
             var car = db.cars.Where(m => m.Id == rent.cars.Id).FirstOrDefault();
             rent.cars = car;
             var customer = db.customers.Where(m => m.Id == rent.customers.Id).FirstOrDefault();
             rent.customers = customer;
+
             db.rent.Add(rent);
             db.SaveChanges();
 

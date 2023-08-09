@@ -11,14 +11,24 @@ namespace rentaCar.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class rent
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+
+        [Required]
+        public int CustomerId{ get; set; }
+        
+        [Required]
         public int CarId { get; set; }
+        
         public int Day { get; set; }
+
+        [Required]
         public System.DateTime RentalDate { get; set; }
+        
+        [Required]
         public System.DateTime ReturnDate { get; set; }
         public string Note { get; set; }
     

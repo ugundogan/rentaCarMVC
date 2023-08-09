@@ -128,14 +128,22 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CarsController.cs" />
-    <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\CarsControllers\AvailableCarsController.cs" />
+    <Compile Include="Controllers\CarsControllers\CarsController.cs" />
+    <Compile Include="Controllers\CarsControllers\GetCarController.cs" />
+    <Compile Include="Controllers\CarsControllers\OnRentCarsController.cs" />
+    <Compile Include="Controllers\CustomersControllers\CustomersController.cs" />
+    <Compile Include="Controllers\CustomersControllers\GetCustomerController.cs" />
+    <Compile Include="Controllers\CustomersControllers\NewCustomerController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RentsController.cs" />
+    <Compile Include="Controllers\CarsControllers\NewCarController.cs" />
+    <Compile Include="Controllers\RentsControllers\NewRentController.cs" />
+    <Compile Include="Controllers\RentsControllers\RentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class\CarRent.cs" />
     <Compile Include="Models\Entities\cars.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -236,19 +244,21 @@
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Cars\Index.cshtml" />
-    <Content Include="Views\Cars\NewCar.cshtml" />
-    <Content Include="Views\Cars\OnRentCars.cshtml" />
     <Content Include="Views\Cars\AvailableCars.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
-    <Content Include="Views\Cars\GetCar.cshtml" />
-    <Content Include="Views\Customers\NewCustomer.cshtml" />
-    <Content Include="Views\Customers\GetCustomer.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
     <Content Include="Views\Rents\GetRent.cshtml" />
-    <Content Include="Views\Rents\NewRent.cshtml" />
+    <Content Include="Views\NewCar\NewCar.cshtml" />
+    <Content Include="Views\OnRentCars\OnRentCars.cshtml" />
+    <Content Include="Views\NewCustomer\NewCustomer.cshtml" />
+    <Content Include="Views\GetCustomer\GetCustomer.cshtml" />
+    <Content Include="Views\GetCar\GetCar.cshtml" />
+    <Content Include="Views\NewRent\NewRent.cshtml" />
+    <Content Include="Views\AvailableCars\AvailableCars.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Available\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

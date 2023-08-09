@@ -11,28 +11,10 @@ namespace rentaCar.Controllers
     {
         rentaCarEntities db = new rentaCarEntities();
         // GET: Cars
-        public ActionResult Index() 
+        public ActionResult Index()
         {
             var values = db.cars.ToList();
             return View(values);
-        }
-
-        [HttpGet]
-
-        public ActionResult NewCar() 
-        {
-            return View();
-        }
-
-        [HttpPost]
-
-        public ActionResult NewCar(cars car) 
-        {
-            db.cars.Add(car);
-            db.SaveChanges();
-
-
-            return RedirectToAction("Index");
         }
 
         public ActionResult DeleteCar(int id)
@@ -43,24 +25,27 @@ namespace rentaCar.Controllers
 
             return RedirectToAction("Index");
         }
-        
 
-        public ActionResult OnRentCars()
-        {
-            var values = db.cars.ToList();
-            return View(values);
-        }
+
+        
 
         public ActionResult AvailableCars()
         {
-            var values = db.cars.ToList();
-            return View(values);
-        }
+            var carData = db.cars.ToList();
+            
+            var rentData = db.rent.ToList();
 
-        public ActionResult GetCar(int id)
-        {
-            var values = db.cars.Find(id);
-            return View("GetCar",values);
+            var result =from c in carData
+                                      join r in rentData on c.Id equals r.CarId into gj
+                                      from subrent in gj.DefaultIfEmpty()
+                                      select new
+                                      {
+                                          CarData = c,
+                                          RentData = subrent
+                                      };
+
+            ViewBag.values = rentData.ToList();
+            return View();
         }
 
         public ActionResult EditCar(cars car)

@@ -22,13 +22,13 @@
                 grid.Column("Adress", "Adres"),
                 grid.Column("Mail", "E-Posta"),
                 grid.Column("DriverLicenseNo", "Sürücü Belge No"),
-                grid.Column("Düzenle", format: @<text> <a href="/Customers/GetCustomer/@item.Id" class="btn btn-info">Düzenle</a> </text>),
+                grid.Column("Düzenle", format: @<text> <a href="/GetCustomer/GetCustomer/@item.Id" class="btn btn-info">Düzenle</a> </text>),
 grid.Column("Sil", format: @<text> <a href="/Customers/DeleteCustomer/@item.Id" class="btn btn-danger">Sil</a> </text>)
 )
 )
     </div>
    
-    <a href="/Customers/NewCustomer/" class="btn btn-success">Müşteri Ekle</a>
+    <a href="/NewCustomer/NewCustomer/" class="btn btn-success">Müşteri Ekle</a>
 
 
 </div>

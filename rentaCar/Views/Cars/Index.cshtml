@@ -26,7 +26,7 @@
                      grid.Column("CarType", "Araç Tipi"),
                      grid.Column("RentState", "Kira Uygunluk"),
                      grid.Column("DailyPrice", "Günlük Ücret"),
-                     grid.Column("Düzenle", format: @<text> <a href="/Cars/GetCar/@item.Id" class="btn btn-info">Düzenle</a> </text>),
+                     grid.Column("Düzenle", format: @<text> <a href="/GetCar/GetCar/@item.Id" class="btn btn-info">Düzenle</a> </text>),
                      grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn btn-danger">Sil</a> </text>)
 
 )
@@ -34,10 +34,14 @@
     </div>
 
     <div class="">
-        <a href="/Cars/NewCar/" class="btn btn-success">Araç Ekle</a>
+        <a href="/NewCar/NewCar/" class="btn btn-success">Araç Ekle</a>
     </div>
 
 </div>
+
+<script>
+
+</script>
 
 
 @*<div class="container">

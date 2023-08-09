@@ -23,12 +23,18 @@ namespace rentaCar.Models.Entities
 
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Boþ Býrakýlamaz")]
+        [StringLength(11,MinimumLength =11 ,ErrorMessage = "Kimlik numarasý 11 haneli olmalýdýr.")]
         public string IdentitiyNumber { get; set; }
+        [Required(ErrorMessage ="Boþ býrakýlamaz")]
         public string FullName { get; set; }
+
+        [Required(ErrorMessage ="Boþ Býrakýlamaz")]
+        [Phone(ErrorMessage = "Telefon numarasýný Doðru giriniz.")]
         public string Phone { get; set; }
         public string Adress { get; set; }
+        [EmailAddress(ErrorMessage = "Mail adresini doðru giriniz")]
         public string Mail { get; set; }
+        [StringLength(6,MinimumLength =6,ErrorMessage =" Sürücü Belge Numarasýný doðru giriniz.")]
         public string DriverLicenseNo { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

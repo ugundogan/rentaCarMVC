@@ -55,12 +55,6 @@ namespace rentaCar.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult GetCustomer(int id) 
-        {
-            var values = db.customers.Find(id);
-            return View("GetCustomer", values);
-        }
-
         public ActionResult EditCustomer(customers customer)
         {
             var values = db.customers.Find(customer.Id);
@@ -70,7 +64,6 @@ namespace rentaCar.Controllers
             values.Adress = customer.Adress;
             values.Mail = customer.Mail;
             values.DriverLicenseNo = customer.DriverLicenseNo;
-
             db.SaveChanges();
             return RedirectToAction("Index");
         }
