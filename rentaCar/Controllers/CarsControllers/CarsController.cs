@@ -29,25 +29,6 @@ namespace rentaCar.Controllers
 
         
 
-        public ActionResult AvailableCars()
-        {
-            var carData = db.cars.ToList();
-            
-            var rentData = db.rent.ToList();
-
-            var result =from c in carData
-                                      join r in rentData on c.Id equals r.CarId into gj
-                                      from subrent in gj.DefaultIfEmpty()
-                                      select new
-                                      {
-                                          CarData = c,
-                                          RentData = subrent
-                                      };
-
-            ViewBag.values = rentData.ToList();
-            return View();
-        }
-
         public ActionResult EditCar(cars car)
         {
             var values = db.cars.Find(car.Id);

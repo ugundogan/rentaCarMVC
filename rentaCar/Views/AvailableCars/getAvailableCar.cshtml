@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "getAvailableCar";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+
+}
+
+<div class="container">
+
+    <button type="button" id="sorgula" class="btn btn-primary">Araç Sorgula</button>
+
+    <form class="form-horizontal" method="post">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Kiralama Tarihi</label>
+            <div class="col-sm-5">
+                <input type="datetime-local" class="form-control" name="RentalDate" id="startdate" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Dönüş Tarihi</label>
+            <div class="col-sm-5">
+                <input type="datetime-local" class="form-control" name="ReturnDate" id="finishdate" />
+            </div>
+        </div>
+    </form>
+
+    <div id="getCar">
+        
+    </div>
+
+</div>
+
+<script>
+    $("#sorgula").click(x => {
+        let startdate = $("#startdate").val();
+        let finishdate = $("#finishdate").val();
+        $.ajax({
+            dataType: "json",
+            type: "post",
+            url: "/AvailableCars/getAvailableCars/",
+            data: {
+                d1: startdate,
+                d2: finishdate
+            },
+            success: function (func) {
+                let w = jQuery.parseJSON(func);
+                console.log(w);
+                let tablehtml = "<table class= table table-bordered> <tr><th>ID</th> <th> CUSTOMER ID</th><th>CAR ID</th><th>RENTAL DATE</th><th>RETURN DATE</th><th>NOTE</th></tr>";
+                $.each(w, (index, value) => {
+                    tablehtml += `<tr><td>${value.Id}</td><td>${value.CustomerId}</td><td>${value.CarId}</td><td>${value.RentalDate}</td><td>${value.ReturnDate}</td><td>${value.Note}</td></tr>`
+                });
+                tablehtml += "</table>";
+                $("#getCar").html(tablehtml);
+            }
+        })
+        console.log(startdate);
+    });
+</script>
+

@@ -14,7 +14,12 @@ namespace rentaCar.Controllers
         public ActionResult Index()
         {
             var values = db.rent.ToList();
+
+
             return View(values);
+
+
+
         }
 
         //public ActionResult Details(int id) { }

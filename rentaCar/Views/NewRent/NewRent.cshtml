@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Araç</label>
-        @**@<div class="col-sm-5">
+        <div class="col-sm-5">
             @grid.GetHtml(
             tableStyle: "table-bordered col-md-12 text-center",
             columns: grid.Columns(
@@ -32,12 +32,12 @@
                     )
 
 
-)*@
+)
 
             
             @Html.DropDownListFor(m => m.cars.Id, (List<SelectListItem>)ViewBag.valueCar, new { @class = "form-control" })
         </div>
-
+</div>
     <div class="form-group">
         <label class="control-label col-sm-2">Gün</label>
         <div class="col-sm-5">
