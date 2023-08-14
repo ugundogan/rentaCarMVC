@@ -23,8 +23,6 @@ namespace rentaCar.Models.Entities
         [Required]
         public int CarId { get; set; }
         
-        public int Day { get; set; }
-
         [Required]
         public System.DateTime RentalDate { get; set; }
         
