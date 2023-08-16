@@ -12,16 +12,10 @@ namespace rentaCar.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class rent
+    public partial class Users
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public int CarId { get; set; }
-        public System.DateTime RentalDate { get; set; }
-        public System.DateTime ReturnDate { get; set; }
-        public string Note { get; set; }
-    
-        public virtual cars cars { get; set; }
-        public virtual customers customers { get; set; }
+        public string UserName { get; set; }
+        public string UserPassword { get; set; }
     }
 }

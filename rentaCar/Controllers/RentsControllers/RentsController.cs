@@ -11,6 +11,7 @@ namespace rentaCar.Controllers
     {
         // GET: Rents
         rentaCarEntities db = new rentaCarEntities();
+        [Authorize]
         public ActionResult Index()
         {
             var values = db.rent.ToList();

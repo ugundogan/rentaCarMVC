@@ -11,8 +11,7 @@ namespace rentaCar.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class customers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,23 +19,15 @@ namespace rentaCar.Models.Entities
         {
             this.rent = new HashSet<rent>();
         }
-
+    
         public int Id { get; set; }
-
-        [StringLength(11,MinimumLength =11 ,ErrorMessage = "Kimlik numarasý 11 haneli olmalýdýr.")]
         public string IdentitiyNumber { get; set; }
-        [Required(ErrorMessage ="Boþ býrakýlamaz")]
         public string FullName { get; set; }
-
-        [Required(ErrorMessage ="Boþ Býrakýlamaz")]
-        [Phone(ErrorMessage = "Telefon numarasýný Doðru giriniz.")]
         public string Phone { get; set; }
         public string Adress { get; set; }
-        [EmailAddress(ErrorMessage = "Mail adresini doðru giriniz")]
         public string Mail { get; set; }
-        [StringLength(6,MinimumLength =6,ErrorMessage =" Sürücü Belge Numarasýný doðru giriniz.")]
         public string DriverLicenseNo { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rent> rent { get; set; }
     }

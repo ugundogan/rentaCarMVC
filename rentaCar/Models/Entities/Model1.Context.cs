@@ -29,5 +29,6 @@ namespace rentaCar.Models.Entities
         public virtual DbSet<customers> customers { get; set; }
         public virtual DbSet<rent> rent { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }
