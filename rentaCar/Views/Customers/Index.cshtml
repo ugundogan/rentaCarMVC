@@ -1,13 +1,13 @@
-﻿@using rentaCar.Models.Entities
-@model rentaCar.Models.Entities.customers
+﻿@using rentaCar.Models.Entities;
+
+@model IEnumerable<rentaCar.Models.Entities.customers>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
-    WebGrid grid = new WebGrid(ViewBag.Customers);
+    WebGrid grid = new WebGrid(Model);
 
 }
-<asp:GridView runat="server"></asp:GridView>
-
+<asp:GridView runat="server" ></asp:GridView>
 <div class="container">
     <h4>Müşteriler</h4>
     <hr />
@@ -27,185 +27,53 @@ grid.Column("Sil", format: @<text> <a href="/Customers/DeleteCustomer/@item.Id" 
 )
 )
     </div>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewCustomer">Müşteri Ekle</button>
-    @*<a onclick="showInPopup('@Url.Action("NewCustomer","NewCustomer")','Yeni Müşteri')" class="btn btn-success">Yeni Müşteri</a>*@
+   
+    <a href="/NewCustomer/NewCustomer/" class="btn btn-success">Müşteri Ekle</a>
 
 
 </div>
-<div class="modal" id="NewCustomer">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>Yeni Müşteri</h4>
-            </div>
-            <form class="form-horizontal" method="post" action="/NewCustomer/NewCustomer" id="formm">
-                <div class="form-group">
-                    <label class="control-label col-sm-2">TC:</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="IdentitiyNumber" id="identity" onkeyup="validateId()" />
-                        <span id="id-error" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Ad Soyad </label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="FullName" id="name" onkeyup="validateName()"/>
-                        <span id="name-error" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Telefon</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="Phone" id="phone" onkeyup="validatePhone()" />
-                        <span id="phone-error" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Adres</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="Adress" />
-                    </div>
-                    <span id="adress-error"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Mail</label>
-                    <div class="col-sm-5">
-                        <input type="email" class="form-control" name="Mail" id="mail" onkeyup="validateMail()" />
-                        <span id="mail-error" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Sürücü Belge No</label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control" name="DriverLicenseNo" id="driverLicense" />
-                    </div>
-                    <span id="license-error"></span>
-                </div>
 
-                <button class="btn btn-success" onclick="return validateForm()">Kaydet</button>
-                <span id="submitError" ></span>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-<script type="text/javascript">
-    var idError = document.getElementById("id-error");
-    var nameError = document.getElementById("name-error");
-    var phoneError = document.getElementById("phone-error");
-    var adressError = document.getElementById("adress-error");
-    var mailError = document.getElementById("mail-error");
-    var licenseError = document.getElementById("license-error");
-    var x = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-
-    function validateId() {
-        var id = document.getElementById('identity').value;
-        if (id.length != 11) {
-            idError.innerHTML = 'Kimlik numarası 11 haneli olmalıdır';
-            return false;
-        }
-        idError.innerHTML = '';
-        return true;
-    }
-    function validateName() {
-        var name = document.getElementById('name').value;
-        if (name.length == 0) {
-            nameError.innerHTML = 'Ad Soyad alanı boş bırakılamaz!';
-            return false;
-        }
-        //if (!name.match(/^[A-Za-z]*\s{1}[A-Za-z]*&/)) {
-        //    nameError.innerHTML = 'Lütfen Ad Soyad giriniz.';
-        //    return false;
-        //}
-        nameError.innerHTML = '';
-        return true;
-    }
-    function validatePhone() {
-        var phone = document.getElementById('phone').value;
-        if (phone.length == 0) {
-            phoneError.innerHTML = 'Telefon numarası gereklidir!';
-            return false;
-        }
-        if (!phone.match(/^[0-9]*$/)) {
-            phoneError.innerHTML = 'Telefon numarasını doğru giriniz!';
-            return false;
-        }
-        phoneError.innerHTML = '';
-        return true;
-    }
-    function validateMail() {
-        var mail = document.getElementById('mail').value;
-        if (mail == 0) {
-            mailError.innerHTML = 'Mail Adresi gereklidir!';
-            return false;
-        }
-        if (!mail.match(x)) {
-            mailError.innerHTML = 'Mail adresi hatalı';
-            return false;
-        }
-        mailError.innerHTML = '';
-        return true;
-    }
-    function validateLicense() {
-        var license = document.getElementById('driverLicense').value;
-        if (driverLicense != 6) {
-            licenseError.innerHTML = 'Sürücü Belge numarasını doğru giriniz!';
-            return false;
-        }
-        licenseError.innerHTML = '';
-        return true;
-    }
-    function validateForm() {
-        if (!validateId() || !validateName() || !validateMail() || !validatePhone()) {
-            submitError.innerHTML = 'HATA';
-            return false;
-        }
-    }
-</script>
 
 @*<div class="container">
-        <h4>MÜŞTERİLER</h4>
-        <hr />
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>TC</th>
-                    <th>AD SOYAD</th>
-                    <th>TELEFON</th>
-                    <th>ADRES</th>
-                    <th>MAİL</th>
-                    <th>EHLİYET NO</th>
-                    <th>Güncelle</th>
-                    <th>Sil</th>
+    <h4>MÜŞTERİLER</h4>
+    <hr />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TC</th>
+                <th>AD SOYAD</th>
+                <th>TELEFON</th>
+                <th>ADRES</th>
+                <th>MAİL</th>
+                <th>EHLİYET NO</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+                <tr class="text-center">
+                    <td>@x.Id</td>
+                    <td>@x.IdentitiyNumber</td>
+                    <td>@x.FullName</td>
+                    <td>@x.Phone</td>
+                    <td>@x.Adress</td>
+                    <td>@x.Mail</td>
+                    <td>@x.DriverLicenseNo</td>
+                    <td>
+                        <a href="/Customers/GetCustomer/@x.Id" class="btn btn-info">Güncelle</a>
+                    </td>
+                    <td>
+                        <a href="/Customers/DeleteCustomer/@x.Id" class="btn btn-danger">Sil</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var x in Model)
-                {
-                    <tr class="text-center">
-                        <td>@x.Id</td>
-                        <td>@x.IdentitiyNumber</td>
-                        <td>@x.FullName</td>
-                        <td>@x.Phone</td>
-                        <td>@x.Adress</td>
-                        <td>@x.Mail</td>
-                        <td>@x.DriverLicenseNo</td>
-                        <td>
-                            <a href="/Customers/GetCustomer/@x.Id" class="btn btn-info">Güncelle</a>
-                        </td>
-                        <td>
-                            <a href="/Customers/DeleteCustomer/@x.Id" class="btn btn-danger">Sil</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <a href="/Customers/NewCustomer/" class="btn btn-success">Yeni Müşteri</a>
-    </div>*@
+            }
+        </tbody>
+    </table>
+    <a href="/Customers/NewCustomer/" class="btn btn-success">Yeni Müşteri</a>
+</div>*@
 
 
 

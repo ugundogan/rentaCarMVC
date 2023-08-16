@@ -11,8 +11,7 @@ namespace rentaCar.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class cars
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,20 +21,14 @@ namespace rentaCar.Models.Entities
         }
     
         public int Id { get; set; }
-        [Required]
         public string LicensePlate { get; set; }
-        [Required]
         public string Brand { get; set; }
-        [Required]
         public string Model { get; set; }
-        [Required]
         public int ProductYear { get; set; }
         public string Color { get; set; }
         public int km { get; set; }
-        [Required]
         public string CarType { get; set; }
         public byte RentState { get; set; }
-        [Required]
         public decimal DailyPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

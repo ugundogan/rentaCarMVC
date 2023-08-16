@@ -27,13 +27,10 @@
     <div id="getCar">
         
     </div>
-    <a hidden ></a>
 
 </div>
 
 <script>
-
-
     $("#sorgula").click(x => {
         let startdate = $("#startdate").val();
         let finishdate = $("#finishdate").val();
@@ -48,9 +45,9 @@
             success: function (func) {
                 let w = jQuery.parseJSON(func);
                 console.log(w);
-                let tablehtml = "<table class= table table-bordered> <tr><th>ID</th> <th>MARKA</th><th>MODEL</th><th>YIL</th><th>COLOR</th><th>KM</th><th>ARAÇ TİPİ</th><th>GÜNLÜK ÜCRET</th><th>SEÇ</th></tr>";
+                let tablehtml = "<table class= table table-bordered> <tr><th>ID</th> <th> CUSTOMER ID</th><th>CAR ID</th><th>RENTAL DATE</th><th>RETURN DATE</th><th>NOTE</th></tr>";
                 $.each(w, (index, value) => {
-                    tablehtml += `<tr><td>${value.Id}</td><td>${value.Brand}</td><td>${value.Model}</td><td>${value.ProductYear}</td><td>${value.Color}</td><td>${value.km}</td><td>${value.CarType}</td><td>${value.DailyPrice}</td><td>${value.DailyPrice}</td><td><a type href=# onclick=updateCarId(${value.Id})>Seç</a></td></tr>`
+                    tablehtml += `<tr><td>${value.Id}</td><td>${value.CustomerId}</td><td>${value.CarId}</td><td>${value.RentalDate}</td><td>${value.ReturnDate}</td><td>${value.Note}</td></tr>`
                 });
                 tablehtml += "</table>";
                 $("#getCar").html(tablehtml);

@@ -11,22 +11,21 @@ namespace rentaCar.Controllers
     {
         rentaCarEntities db = new rentaCarEntities();
         // GET: NewCar
-        //[HttpGet]
-        //public ActionResult NewCar()
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public ActionResult NewCar()
+        {
+            return View();
+        }
 
 
         [HttpPost]
         public ActionResult NewCar(cars car)
         {
-            car.RentState = 1;
             db.cars.Add(car);
             db.SaveChanges();
 
 
-            return RedirectToAction("../cars/index");
+            return View();
         }
     }
 }

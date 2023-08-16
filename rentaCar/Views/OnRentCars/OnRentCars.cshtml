@@ -8,7 +8,7 @@
 
 
 <div class="container">
-    <h4>KİRAYA UYGUN OLMAYAN ARAÇLAR</h4>
+    <h4>KİRADA OLAN ARAÇLAR</h4>
     <hr />
     <table class="table table-bordered">
         <thead>
@@ -31,7 +31,7 @@
         <tbody>
             @foreach (var x in Model)
             {
-                if (x.RentState == 0)
+                if (x.RentState == 1)
                 {
                     <tr class="text-center">
                         <td>@x.Id</td>

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "NewCar";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<form class="form-horizontal" method="post">
+    <h4>YENİ ARAÇ</h4>
+    <hr />
+    <div class="form-group">
+        <label class="control-label col-sm-2">Plaka</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="LicensePlate" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Marka</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="Brand" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Model</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="Model" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Yıl</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="ProductYear" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Renk</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="Color" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Kilometre</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="km" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Araç Tipi</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="CarType" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2">Günlük Ücret</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" name="DailyPrice" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-info">Ekle</button>
+        </div>
+    </div>
+</form>
+<div>
+    @Html.ActionLink("Back to List", "../Cars/index")
+</div>
