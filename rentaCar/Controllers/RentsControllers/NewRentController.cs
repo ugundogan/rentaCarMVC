@@ -40,8 +40,10 @@ namespace rentaCar.Controllers.RentsControllers
 
         public ActionResult NewRent(rent rent)
         {
-            var car = db.cars.Where(m => m.Id == rent.cars.Id).FirstOrDefault();
-            rent.cars = car;
+
+                 
+            //var car = db.cars.Where(m => m.Id == rent.cars.Id).FirstOrDefault();
+            //rent.cars = car;
             var customer = db.customers.Where(m => m.Id == rent.customers.Id).FirstOrDefault();
             rent.customers = customer;
 

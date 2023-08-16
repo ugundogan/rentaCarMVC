@@ -15,7 +15,6 @@ namespace rentaCar.Controllers
         {
             var values = db.rent.ToList();
 
-
             return View(values);
 
 
@@ -33,7 +32,6 @@ namespace rentaCar.Controllers
             var values = db.rent.Find(rent.Id);
             values.CustomerId = rent.CustomerId;
             values.CarId = rent.CarId;
-            values.Day = rent.Day;
             values.RentalDate = rent.RentalDate;
             values.ReturnDate = rent.ReturnDate;
             values.Note = rent.Note;
@@ -83,7 +81,6 @@ namespace rentaCar.Controllers
             rent.cars = car;
             var customer = db.customers.Where(m => m.Id == rent.customers.Id).FirstOrDefault();
             rent.customers = customer;
-
             db.rent.Add(rent);
             db.SaveChanges();
 
