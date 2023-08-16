@@ -150,6 +150,7 @@
     <Compile Include="Models\Entities\customers.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\dates.cs" />
     <Compile Include="Models\Entities\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -247,9 +248,7 @@
     <Content Include="Views\Customers\Index.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
     <Content Include="Views\Rents\GetRent.cshtml" />
-    <Content Include="Views\NewCar\NewCar.cshtml" />
     <Content Include="Views\OnRentCars\OnRentCars.cshtml" />
-    <Content Include="Views\NewCustomer\NewCustomer.cshtml" />
     <Content Include="Views\GetCustomer\GetCustomer.cshtml" />
     <Content Include="Views\GetCar\GetCar.cshtml" />
     <Content Include="Views\NewRent\NewRent.cshtml" />

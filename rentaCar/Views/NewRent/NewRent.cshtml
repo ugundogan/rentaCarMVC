@@ -2,66 +2,76 @@
 @{
     ViewBag.Title = "NewRent";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
-    WebGrid grid = new WebGrid(ViewBag.values);
+    var grid = new WebGrid(ViewBag.values, ajaxUpdateContainerId: "gridContent");
 }
 
 <form class="form-horizontal" method="post">
     <div class="form-group">
-        <label class="control-label col-sm-2">Müşteri</label>
-        <div class="col-sm-5">
-            @Html.DropDownListFor(m => m.customers.Id,(List<SelectListItem>)ViewBag.valueCustomer, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">Araç</label>
-        <div class="col-sm-5">
-            @grid.GetHtml(
-            tableStyle: "table-bordered col-md-12 text-center",
-            columns: grid.Columns(
-                    grid.Column("Id", "ID"),
-                    grid.Column("LicensePlate", "Plaka"),
-                    grid.Column("Brand", "Marka"),
-                    grid.Column("Model", "Model"),
-                    grid.Column("ProductYear", "Yıl"),
-                    grid.Column("Color", "Renk"),
-                    grid.Column("km", "KM"),
-                    grid.Column("CarType", "Araç Tipi"),
-                    grid.Column("RentState", "Kira Uygunluk"),
-                    grid.Column("DailyPrice", "Günlük Ücret")
-                    //grid.Column("Seç", format: @Html.RadioButtonFor(m)
-                    )
-
-
-)
-
-            
-            @Html.DropDownListFor(m => m.cars.Id, (List<SelectListItem>)ViewBag.valueCar, new { @class = "form-control" })
-        </div>
-</div>
-    <div class="form-group">
-        <label class="control-label col-sm-2">Gün</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" name="Day" />
-        </div>
-    </div>
-    <div class="form-group">
         <label class="control-label col-sm-2">Kiralama Tarihi</label>
         <div class="col-sm-5">
-            <input type="datetime-local" class="form-control" name="RentalDate" />
+            <input type="datetime-local" class="form-control" name="RentalDate" id="startdate" />
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Dönüş Tarihi</label>
         <div class="col-sm-5">
-            <input type="datetime-local" class="form-control" name="ReturnDate" />
+            <input type="datetime-local" class="form-control" name="ReturnDate" id="finishdate" />
         </div>
+        <button type="button" id="sorgula" class="btn btn-primary">Araç Sorgula</button>
     </div>
+    <div id="getCar"></div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Müşteri</label>
+        <div class="col-sm-5">
+            @Html.DropDownListFor(m => m.customers.Id, (List<SelectListItem>)ViewBag.valueCustomer, new { @class = "form-control" })
+        </div>
+        
+    </div>
+   
     <div class="form-group">
         <label class="control-label col-sm-2">Not</label>
         <div class="col-sm-5">
             <input type="text" class="form-control" name="Note" />
         </div>
     </div>
+    <input type="hidden" value="4" name="CarId" id="CarId" />
+
     <button class="btn btn-success">Kaydet</button>
 </form>
+
+
+
+<script>
+
+    function updateCarId(valuex)
+    {
+        $("#CarId").val(valuex);
+    }
+
+    $("#sorgula").click(x => {
+        let startdate = $("#startdate").val();
+        let finishdate = $("#finishdate").val();
+        $.ajax({
+            dataType: "json",
+            type: "get",
+            url: "/AvailableCars/getAvailableCars/",
+            data: {
+                d1: startdate,
+                d2: finishdate
+            },
+            success: function (func) {
+                
+                let w = jQuery.parseJSON(func);
+                console.log(w);
+                let tablehtml = "<table class= table table-bordered> <tr><th>ID</th><th>Plaka</th> <th>MARKA</th><th>MODEL</th><th>YIL</th><th>COLOR</th><th>KM</th><th>ARAÇ TİPİ</th><th>GÜNLÜK ÜCRET</th><th>SEÇ</th></tr>";
+                $.each(w, (index, value) => {
+                    tablehtml += `<tr><td>${value.Id}</td><td>${value.LicensePlate}</td><td>${value.Brand}</td><td>${value.Model}</td><td>${value.ProductYear}</td><td>${value.Color}</td><td>${value.km}</td><td>${value.CarType}</td><td>${value.DailyPrice}</td><td><a type href=# onclick=updateCarId(${value.Id})>Seç</a></td></tr>`
+                });
+                tablehtml += "</table>";
+                $("#getCar").html(tablehtml);
+            }
+        })
+        console.log(startdate);
+    });
+</script>
 

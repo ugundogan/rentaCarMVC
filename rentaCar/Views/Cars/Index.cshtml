@@ -27,20 +27,160 @@
                      grid.Column("RentState", "Kira Uygunluk"),
                      grid.Column("DailyPrice", "Günlük Ücret"),
                      grid.Column("Düzenle", format: @<text> <a href="/GetCar/GetCar/@item.Id" class="btn btn-info">Düzenle</a> </text>),
-                     grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn btn-danger">Sil</a> </text>)
+grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn btn-danger">Sil</a> </text>)
 
 )
 )
     </div>
 
-    <div class="">
-        <a href="/NewCar/NewCar/" class="btn btn-success">Araç Ekle</a>
+    <div>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#NewCar">Yeni Araç</button>
     </div>
-
 </div>
 
-<script>
+<div class="modal" id="NewCar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Yeni Araç</h4>
+            </div>
+            <form class="form-horizontal" method="post" action="/NewCar/NewCar">
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Plaka</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="LicensePlate"  id="plate" onkeyup="validatePlate()"/>
+                        <span id="plateError" class="text-danger"></span>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Marka</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="Brand" id="brand" onkeyup="validateBrand()" />
+                        <span id="brandError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Model</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="Model" id="model" onkeyup="validateModel" />
+                        <span id="modelError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Yıl</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="ProductYear" id="year" />
+                        <span id="yearError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Renk</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="Color" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Kilometre</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="km" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Araç Tipi</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="CarType" id="type" />
+                        <span id="typeError" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Günlük Ücret</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" name="DailyPrice" id="price" />
+                        <span id="priceError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button class="btn btn-info" onclick="return validateForm()">Ekle</button>
+                        <span id="submitError" class="textDanger"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function validatePlate() {
+        var plate = document.getElementById('plate').value;
+        if (plate == 0) {
+            plateError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        plateError.innerHTML = '';
+        return true;
+    }
+    function validateBrand() {
+        var brand = document.getElementById('brand').value;
+        if (brand == 0) {
+            brandError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        brandError.innerHTML = '';
+        return true;
+    }
+    function validateModel() {
+        var model = document.getElementById('model').value;
+        if (model == 0) {
+            modelError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        modelError.innerHTML = '';
+        return true;
+    }
+    function validateYear() {
+        var year = document.getElementById('year').value;
+        if (year == 0) {
+            yearError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        yearError.innerHTML = '';
+        return true;
+    }
+    function validateType() {
+        var type = document.getElementById('type').value;
+        if (type == 0) {
+            typeError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        typeError.innerHTML = '';
+        return true;
+    }
+    function validatePrice() {
+        var price = document.getElementById('price').value;
+        if (type == 0) {
+            priceError.innerHTML = 'Alan boş bırakılamaz!';
+            return false;
+        }
+        priceError.innerHTML = '';
+        return true;
+    }
+
+    function validateForm() {
+        if (!validatePlate() || !validateBrand() || !validateModel() || !validateYear() || !validateType() || !validatePrice()) {
+            submitError.innerHTML = 'HATA';
+            return false;
+        }
+    }
 </script>
 
 

@@ -15,36 +15,10 @@ namespace rentaCar.Controllers
         {
             
             var values = db.customers.ToList();
-            return View(values);
-        }
-
-        [HttpGet]
-
-        public ActionResult NewCustomer()
-        {
+            ViewBag.Customers = values;
             return View();
         }
 
-        [HttpPost]
-
-        public ActionResult NewCustomer(customers customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View("NewCustomer");
-            }
-            try
-            {
-            db.customers.Add(customer);
-            db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                var message = ex.ToString();
-            }
-
-            return RedirectToAction("Index");
-        }
 
         public ActionResult DeleteCustomer(int id)
         {

@@ -9,17 +9,11 @@ using rentaCar.Models.Entities;
 
 namespace rentaCar.Controllers.CarsControllers
 {
-    public class AjaxData
-    {
-        public DateTime d1 { get; set; }
-        public DateTime d2 { get; set; }
-        public string a { get; set; }   
-    }
     public class AvailableCarsController : Controller
     {
         rentaCarEntities db = new rentaCarEntities();
         // GET: AvailableCars
-        public ActionResult AvailableCars()
+        public ActionResult AvailableCars(dates date)
         {
             var carData = db.cars.ToList();
 
@@ -58,28 +52,52 @@ namespace rentaCar.Controllers.CarsControllers
             //                 RentData = r
             //             };
 
-            DateTime startdate = DateTime.Parse("2023-08-16 10:48:00.000");
-            DateTime finishdate = DateTime.Parse("2023-08-10 10:48:00.000");
+            DateTime startdate = date.d1;
+            DateTime finishdate = date.d2;
 
-            var query = from r in rentData
-                        join c in carData on r.CarId equals c.Id into carGroup
-                        from c in carGroup.DefaultIfEmpty()
+            var values = from r in rentData
+                         join c in carData on r.CarId equals c.Id into carGroup
+                         from c in carGroup.DefaultIfEmpty()
+                         where
+                         (
+                             !(startdate >= r.RentalDate && startdate <= r.ReturnDate) &&
+                             !(finishdate >= r.RentalDate && finishdate <= r.ReturnDate)
+                         )
+                         select new
+                         {
+                             c.Id,
+                             c.LicensePlate,
+                             c.Brand,
+                             c.Model,
+                             c.ProductYear,
+                             c.Color,
+                             c.km,
+                             c.CarType,
+                             c.DailyPrice,
+                         };
+            var availableCars = values.Concat(
+                        from c in carData
+                        join r in rentData on c.Id equals r.CarId into rentGroup
+                        from r in rentGroup.DefaultIfEmpty()
                         where
                         (
-                            !(startdate >= r.RentalDate && startdate <= r.ReturnDate) &&
-                            !(finishdate >= r.RentalDate && finishdate <= r.ReturnDate)
+                            c.RentState == 1 && r == null
                         )
                         select new
                         {
-                            r.Id,
-                            r.CarId,
-                            r.CustomerId,
-                            r.RentalDate,
-                            r.ReturnDate,
-                            r.Note
-                        };
+                            c.Id,
+                            c.LicensePlate,
+                            c.Brand,
+                            c.Model,
+                            c.ProductYear,
+                            c.Color,
+                            c.km,
+                            c.CarType,
+                            c.DailyPrice,
+                        }
+                    );
 
-            var result = query.ToList();
+            var result = availableCars.ToList();
 
 
             ViewBag.values = result;
@@ -88,8 +106,8 @@ namespace rentaCar.Controllers.CarsControllers
         }
 
 
-        [HttpPost]
-        public ActionResult getAvailableCars(AjaxData ajaxData)
+        [HttpGet]
+        public ActionResult getAvailableCars(dates ajaxData)
         {
             var carData = db.cars.ToList();
 
@@ -107,22 +125,44 @@ namespace rentaCar.Controllers.CarsControllers
                          )
                          select new
                          {
-                             r.Id,
-                             r.CarId,
-                             r.CustomerId,
-                             r.RentalDate,
-                             r.ReturnDate,
-                             r.Note
+                             c.Id,
+                             c.LicensePlate,
+                             c.Brand,
+                             c.Model,
+                             c.ProductYear,
+                             c.Color,
+                             c.km,
+                             c.CarType,
+                             c.DailyPrice,
                          };
+            var availableCars = values.Concat(
+                        from c in carData
+                        join r in rentData on c.Id equals r.CarId into rentGroup
+                        from r in rentGroup.DefaultIfEmpty()
+                        where
+                        (
+                            c.RentState == 1 && r == null
+                        )
+                        select new
+                        {
+                            c.Id,
+                            c.LicensePlate,
+                            c.Brand,
+                            c.Model,
+                            c.ProductYear,
+                            c.Color,
+                            c.km,
+                            c.CarType,
+                            c.DailyPrice,
+                        }
+                    );
+            ViewBag.values = availableCars.ToList();
 
-            var jsonValues = JsonConvert.SerializeObject(values);
+            var jsonValues = JsonConvert.SerializeObject(availableCars);
 
             return Json(jsonValues, JsonRequestBehavior.AllowGet);
+            //return View();
 
-        }
-        public ActionResult getAvailableCar()
-        {
-            return View();
         }
     }
 }
