@@ -19,6 +19,7 @@
           <Property Name="CarType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="RentState" Type="tinyint" Nullable="false" />
           <Property Name="DailyPrice" Type="money" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="customers">
           <Key>
@@ -119,6 +120,7 @@
           <Property Name="RentState" Type="Byte" Nullable="false" />
           <Property Name="DailyPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="rent" Relationship="Self.FK_contracts_cars" FromRole="cars" ToRole="rent" />
+          <Property Name="Image" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="customers">
           <Key>
@@ -213,6 +215,7 @@
           <EntitySetMapping Name="cars">
             <EntityTypeMapping TypeName="rentaCarModel.cars">
               <MappingFragment StoreEntitySet="cars">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LicensePlate" ColumnName="LicensePlate" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />

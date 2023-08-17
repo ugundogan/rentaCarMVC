@@ -7,11 +7,12 @@ using System.Web.Mvc;
 
 namespace rentaCar.Controllers
 {
+    
     public class RentsController : Controller
     {
         // GET: Rents
         rentaCarEntities db = new rentaCarEntities();
-        [Authorize]
+        
         public ActionResult Index()
         {
             var values = db.rent.ToList();

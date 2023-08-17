@@ -16,6 +16,7 @@
         @grid.GetHtml(
              tableStyle: "table-bordered col-md-12 text-center",
              columns: grid.Columns(
+                     grid.Column(format: @<img src="@Href(item.Image)" width="100" height="100"/>),
                      grid.Column("Id", "ID"),
                      grid.Column("LicensePlate", "Plaka"),
                      grid.Column("Brand", "Marka"),
@@ -44,11 +45,11 @@ grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn
             <div class="modal-header">
                 <h4>Yeni Araç</h4>
             </div>
-            <form class="form-horizontal" method="post" action="/NewCar/NewCar">
+            <form class="form-horizontal" method="post" action="/NewCar/NewCar" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label col-sm-2">Plaka</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" name="LicensePlate"  id="plate" onkeyup="validatePlate()"/>
+                        <input type="text" class="form-control" name="LicensePlate" id="plate" onkeyup="validatePlate()" />
                         <span id="plateError" class="text-danger"></span>
                     </div>
                 </div>
@@ -106,6 +107,14 @@ grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn
                         <span id="priceError" class="text-danger"></span>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">Fotoğraf</label>
+                    <div class="col-sm-5">
+                        <input type="file" class="form-control" name="ImageFile" id="image" />
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button class="btn btn-info" onclick="return validateForm()">Ekle</button>

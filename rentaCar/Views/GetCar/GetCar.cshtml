@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_MainLayout.cshtml";
 }
 
-@using (Html.BeginForm("EditCar", "Cars", FormMethod.Post))
+@using (Html.BeginForm("EditCar", "Cars", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
         <h4>ARAÇ DÜZENLE</h4>
@@ -82,6 +82,14 @@
             @*@Html.LabelFor(k => k.LicensePlate)*@
             <div class="col-sm-5">
                 @Html.TextBoxFor(k => k.DailyPrice, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Fotoğraf</label>
+            @*@Html.LabelFor(k => k.LicensePlate)*@
+            <div class="col-sm-5">
+                @*@Html.TextBoxFor(k => k.ImageFile, new {type="file" , @class = "form-control" })*@
+                <input type="file" class="form-control" name="ImageFile" id="image" />
             </div>
         </div>
         <div class="form-group">

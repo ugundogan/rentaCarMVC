@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace rentaCar.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         rentaCarEntities db = new rentaCarEntities();
@@ -29,12 +31,19 @@ namespace rentaCar.Controllers
             var userinfo = db.Users.FirstOrDefault(x=>x.UserName == user.UserName && x.UserPassword == password);
             if (userinfo != null)
             {
+                FormsAuthentication.SetAuthCookie(userinfo.UserName, false);
+                Session["UserName"] = userinfo.UserName;
                 return RedirectToAction("Index", "rents");
             }
             else
             {
                 return RedirectToAction("Index");
             }
+        }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut(); 
+            return RedirectToAction("Index");
         }
     }
 }

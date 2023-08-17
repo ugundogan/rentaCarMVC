@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,11 +17,24 @@ namespace rentaCar.Controllers
         //{
         //    return View();
         //}
-
+        [HttpGet]
+        public ActionResult NewCar()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult NewCar(cars car)
         {
+            if(Request.Files.Count > 0)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(car.ImageFile.FileName);
+                string extension = Path.GetExtension(car.ImageFile.FileName);
+                fileName = fileName + extension;
+                car.Image = "~/Image/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                car.ImageFile.SaveAs(fileName);
+            }
             car.RentState = 1;
             db.cars.Add(car);
             db.SaveChanges();
