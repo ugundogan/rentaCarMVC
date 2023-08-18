@@ -25,8 +25,11 @@ namespace rentaCar.Controllers
 
         [HttpPost]
         public ActionResult NewCar(cars car)
-        {
-            if(Request.Files.Count > 0)
+        {   if(car.ImageFile == null)
+            {
+                car.Image = "Null";
+            }
+            if (car.ImageFile != null)
             {
                 string fileName = Path.GetFileNameWithoutExtension(car.ImageFile.FileName);
                 string extension = Path.GetExtension(car.ImageFile.FileName);

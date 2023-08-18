@@ -79,7 +79,6 @@
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2">Günlük Ücret</label>
-            @*@Html.LabelFor(k => k.LicensePlate)*@
             <div class="col-sm-5">
                 @Html.TextBoxFor(k => k.DailyPrice, new { @class = "form-control" })
             </div>
@@ -88,6 +87,9 @@
             <label class="control-label col-sm-2">Fotoğraf</label>
             @*@Html.LabelFor(k => k.LicensePlate)*@
             <div class="col-sm-5">
+                <img id="as" src="@Url.Content(Model.Image)" width="100" height="100" />
+                <a onclick="hideImage()" href="../../Cars/DeleteImage/@Model.Id">KALDIR</a>
+                @*<img src="k => k.Image" width="100" height="100" />*@
                 @*@Html.TextBoxFor(k => k.ImageFile, new {type="file" , @class = "form-control" })*@
                 <input type="file" class="form-control" name="ImageFile" id="image" />
             </div>
@@ -100,3 +102,9 @@
 
 
 }
+
+<script>
+    function hideImage() {
+        document.getElementById("as").style.visibility = "hidden";
+    }
+</script>
