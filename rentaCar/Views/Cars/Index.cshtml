@@ -16,19 +16,19 @@
         @grid.GetHtml(
              tableStyle: "table-bordered col-md-12 text-center",
              columns: grid.Columns(
-                     grid.Column(format: @<img src="@Href(item.Image)" width="100" height="100"/>),
-                     grid.Column("Id", "ID"),
-                     grid.Column("LicensePlate", "Plaka"),
-                     grid.Column("Brand", "Marka"),
-                     grid.Column("Model", "Model"),
-                     grid.Column("ProductYear", "Yıl"),
-                     grid.Column("Color", "Renk"),
-                     grid.Column("km", "KM"),
-                     grid.Column("CarType", "Araç Tipi"),
-                     grid.Column("RentState", "Kira Uygunluk"),
-                     grid.Column("DailyPrice", "Günlük Ücret"),
-                     grid.Column("Düzenle", format: @<text> <a href="/GetCar/GetCar/@item.Id" class="btn btn-info">Düzenle</a> </text>),
-grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn btn-danger">Sil</a> </text>)
+                     grid.Column(format: @<img src="@Href(item.Image)" width="100" height="100" />),
+grid.Column("Id", "ID"),
+grid.Column("LicensePlate", "Plaka"),
+grid.Column("Brand", "Marka"),
+grid.Column("Model", "Model"),
+grid.Column("ProductYear", "Yıl"),
+grid.Column("Color", "Renk"),
+grid.Column("km", "KM"),
+grid.Column("CarType", "Araç Tipi"),
+grid.Column("RentState", "Kira Uygunluk"),
+grid.Column("DailyPrice", "Günlük Ücret"),
+grid.Column("Düzenle", format: @<text> <a href="/GetCar/GetCar/@item.Id" class="btn btn-info">Düzenle</a> </text>),
+grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn btn-danger" id="del"> Sil</a> </text>)
 
 )
 )
@@ -122,6 +122,16 @@ grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn
                     </div>
                 </div>
             </form>
+            @if (ViewBag.Message != null)
+            {
+                <script type="text/javascript">
+
+                    window.onload = function () {
+                        alert("@ViewBag.Message");
+                    };
+                </script>
+
+            }
         </div>
     </div>
 </div>
@@ -190,6 +200,7 @@ grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn
             return false;
         }
     }
+
 </script>
 
 

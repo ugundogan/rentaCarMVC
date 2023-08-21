@@ -9,7 +9,7 @@
     <div class="form-group">
         <label class="control-label col-sm-2">Kiralama Tarihi</label>
         <div class="col-sm-5">
-            <input type="datetime-local" class="form-control" name="RentalDate" id="startdate" />
+            <input type="datetime-local" class="form-control" name="RentalDate" id="startdate" onselect="" />
         </div>
     </div>
     <div class="form-group">
@@ -19,7 +19,8 @@
         </div>
         <button type="button" id="sorgula" class="btn btn-primary">Araç Sorgula</button>
     </div>
-    <div id="getCar"></div>
+    <div class="from-group"  id="getCar"></div>
+
     <div class="form-group">
         <label class="control-label col-sm-2">Müşteri</label>
         <div class="col-sm-5">
@@ -46,11 +47,15 @@
     function updateCarId(valuex)
     {
         $("#CarId").val(valuex);
+        $("tr").removeClass("bg-success");
+        $("#" + valuex).addClass("bg-success");
+
     }
 
     $("#sorgula").click(x => {
         let startdate = $("#startdate").val();
         let finishdate = $("#finishdate").val();
+
         $.ajax({
             dataType: "json",
             type: "get",
@@ -65,7 +70,7 @@
                 console.log(w);
                 let tablehtml = "<table class= table table-bordered> <tr><th>ID</th><th>Plaka</th> <th>MARKA</th><th>MODEL</th><th>YIL</th><th>COLOR</th><th>KM</th><th>ARAÇ TİPİ</th><th>GÜNLÜK ÜCRET</th><th>SEÇ</th></tr>";
                 $.each(w, (index, value) => {
-                    tablehtml += `<tr><td>${value.Id}</td><td>${value.LicensePlate}</td><td>${value.Brand}</td><td>${value.Model}</td><td>${value.ProductYear}</td><td>${value.Color}</td><td>${value.km}</td><td>${value.CarType}</td><td>${value.DailyPrice}</td><td><a type href=# onclick=updateCarId(${value.Id})>Seç</a></td></tr>`
+                    tablehtml += `<tr id=${value.Id} ><td>${value.Id}</td><td>${value.LicensePlate}</td><td>${value.Brand}</td><td>${value.Model}</td><td>${value.ProductYear}</td><td>${value.Color}</td><td>${value.km}</td><td>${value.CarType}</td><td>${value.DailyPrice}</td><td><a type href=# onclick=updateCarId(${value.Id})>Seç</a></td></tr>`
                 });
                 tablehtml += "</table>";
                 $("#getCar").html(tablehtml);

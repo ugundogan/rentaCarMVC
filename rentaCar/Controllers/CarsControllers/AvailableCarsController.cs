@@ -52,55 +52,70 @@ namespace rentaCar.Controllers.CarsControllers
             //                 RentData = r
             //             };
 
-            DateTime startdate = date.d1;
-            DateTime finishdate = date.d2;
+            DateTime startDate = date.d1;
+            DateTime finishDate = date.d2;
 
-            var values = from r in rentData
-                         join c in carData on r.CarId equals c.Id into carGroup
-                         from c in carGroup.DefaultIfEmpty()
-                         where
-                         (
-                             !(startdate >= r.RentalDate && startdate <= r.ReturnDate) &&
-                             !(finishdate >= r.RentalDate && finishdate <= r.ReturnDate)
-                         )
-                         select new
-                         {
-                             c.Id,
-                             c.LicensePlate,
-                             c.Brand,
-                             c.Model,
-                             c.ProductYear,
-                             c.Color,
-                             c.km,
-                             c.CarType,
-                             c.DailyPrice,
-                         };
-            var availableCars = values.Concat(
-                        from c in carData
-                        join r in rentData on c.Id equals r.CarId into rentGroup
-                        from r in rentGroup.DefaultIfEmpty()
-                        where
-                        (
-                            c.RentState == 1 && r == null
-                        )
-                        select new
-                        {
-                            c.Id,
-                            c.LicensePlate,
-                            c.Brand,
-                            c.Model,
-                            c.ProductYear,
-                            c.Color,
-                            c.km,
-                            c.CarType,
-                            c.DailyPrice,
-                        }
-                    );
+            //var values = from r in rentData
+            //             join c in carData on r.CarId equals c.Id into carGroup
+            //             from c in carGroup.DefaultIfEmpty()
+            //             where
+            //             (
+            //                 !(startdate >= r.RentalDate && startdate <= r.ReturnDate) &&
+            //                 !(finishdate >= r.RentalDate && finishdate <= r.ReturnDate)
+            //             )
+            //             select new
+            //             {
+            //                 c.Id,
+            //                 c.LicensePlate,
+            //                 c.Brand,
+            //                 c.Model,
+            //                 c.ProductYear,
+            //                 c.Color,
+            //                 c.km,
+            //                 c.CarType,
+            //                 c.DailyPrice,
+            //             };
+            //var availableCars = values.Concat(
+            //            from c in carData
+            //            join r in rentData on c.Id equals r.CarId into rentGroup
+            //            from r in rentGroup.DefaultIfEmpty()
+            //            where
+            //            (
+            //                c.RentState == 1 && r == null
+            //            )
+            //            select new
+            //            {
+            //                c.Id,
+            //                c.LicensePlate,
+            //                c.Brand,
+            //                c.Model,
+            //                c.ProductYear,
+            //                c.Color,
+            //                c.km,
+            //                c.CarType,
+            //                c.DailyPrice,
+            //            }
+            //        );
 
-            var result = availableCars.ToList();
+            //var result = availableCars.ToList();
+            var rentedCarIdsQuery =
+                from c in db.cars
+                join r in db.rent on c.Id equals r.CarId into rentedCars
+                where rentedCars.Any(r =>
+                    (startDate >= r.RentalDate && startDate <= r.ReturnDate) ||
+                    (finishDate >= r.RentalDate && finishDate <= r.ReturnDate))
+                select c.Id;
+
+            var query =
+                from c in db.cars
+                where !rentedCarIdsQuery.Contains(c.Id) ||
+                      (c.RentState == 1 && !db.rent.Any(r => r.CarId == c.Id))
+                select c;
+
+            var availableCars = query.ToList();
 
 
-            ViewBag.values = result;
+            ViewBag.values = availableCars;
 
             return View();
         }
@@ -112,53 +127,38 @@ namespace rentaCar.Controllers.CarsControllers
             var carData = db.cars.ToList();
 
             var rentData = db.rent.ToList();
-            DateTime startdate = ajaxData.d1;
-            DateTime finishdate = ajaxData.d2;
+            DateTime startDate = ajaxData.d1;
+            DateTime finishDate = ajaxData.d2;
 
-            var values = from r in rentData
-                         join c in carData on r.CarId equals c.Id into carGroup
-                         from c in carGroup.DefaultIfEmpty()
-                         where
-                         (
-                             !(startdate >= r.RentalDate && startdate <= r.ReturnDate) &&
-                             !(finishdate >= r.RentalDate && finishdate <= r.ReturnDate)
-                         )
-                         select new
-                         {
-                             c.Id,
-                             c.LicensePlate,
-                             c.Brand,
-                             c.Model,
-                             c.ProductYear,
-                             c.Color,
-                             c.km,
-                             c.CarType,
-                             c.DailyPrice,
-                         };
-            var availableCars = values.Concat(
-                        from c in carData
-                        join r in rentData on c.Id equals r.CarId into rentGroup
-                        from r in rentGroup.DefaultIfEmpty()
-                        where
-                        (
-                            c.RentState == 1 && r == null
-                        )
-                        select new
-                        {
-                            c.Id,
-                            c.LicensePlate,
-                            c.Brand,
-                            c.Model,
-                            c.ProductYear,
-                            c.Color,
-                            c.km,
-                            c.CarType,
-                            c.DailyPrice,
-                        }
-                    );
+            var rentedCarIdsQuery =
+               from c in db.cars
+               join r in db.rent on c.Id equals r.CarId into rentedCars
+               where rentedCars.Any(r =>
+                   (startDate >= r.RentalDate && startDate <= r.ReturnDate) ||
+                   (finishDate >= r.RentalDate && finishDate <= r.ReturnDate))
+               select c.Id;
+
+            var query =
+                from c in db.cars
+                where !rentedCarIdsQuery.Contains(c.Id) ||
+                      (c.RentState == 1 && !db.rent.Any(r => r.CarId == c.Id))
+                select new
+                {
+                    c.Id,
+                    c.LicensePlate,
+                    c.Brand,
+                    c.Model,
+                    c.ProductYear,
+                    c.Color,
+                    c.km,
+                    c.CarType,
+                    c.DailyPrice,
+                };
+
+            var availableCars = query.ToList();
             ViewBag.values = availableCars.ToList();
 
-            var jsonValues = JsonConvert.SerializeObject(availableCars);
+            var jsonValues = JsonConvert.SerializeObject(query);
 
             return Json(jsonValues, JsonRequestBehavior.AllowGet);
             //return View();

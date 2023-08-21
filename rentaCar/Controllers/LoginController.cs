@@ -22,7 +22,11 @@ namespace rentaCar.Controllers
         }
         [HttpPost]
         public ActionResult Index(Users user)
-        {
+        {   
+            if(!ModelState.IsValid)
+            {
+                return View("Index");
+            }
             var preBase64 = user.UserPassword;
             var encodedBytes = Encoding.UTF8.GetBytes(preBase64);
             var password = Convert.ToBase64String(encodedBytes);
@@ -37,7 +41,8 @@ namespace rentaCar.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                ViewBag.message = "Kullanıcı Adı veya Şifre Hatalı";
+                return View("Index");
             }
         }
         public ActionResult Logout()

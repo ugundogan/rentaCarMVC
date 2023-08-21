@@ -23,11 +23,22 @@ namespace rentaCar.Controllers
 
         public ActionResult DeleteCar(int id)
         {
-            var car = db.cars.Find(id);
-            db.cars.Remove(car);
-            db.SaveChanges();
+            var rent = db.rent.FirstOrDefault(x => x.CarId == id);
+            if (rent != null)
+            {
+                ViewBag.message = "Kiralanmış bir aracı silemezsin!";
+                return RedirectToAction("Index");
 
-            return RedirectToAction("Index");
+            }
+            else
+            {
+                var car = db.cars.Find(id);
+                db.cars.Remove(car);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
         }
 
 
@@ -50,7 +61,7 @@ namespace rentaCar.Controllers
 
                 values.Image = "~/Image/" + filename;
             }
-            
+
             values.LicensePlate = car.LicensePlate;
             values.Brand = car.Brand;
             values.Model = car.Model;
@@ -66,10 +77,11 @@ namespace rentaCar.Controllers
 
         }
         [ValidateInput(false)]
-        public ActionResult DeleteImage(int id) {
+        public ActionResult DeleteImage(int id)
+        {
             var values = db.cars.Find(id);
-            
-            if(!string.IsNullOrEmpty(values.Image))
+
+            if (!string.IsNullOrEmpty(values.Image))
             {
                 if (System.IO.File.Exists(Server.MapPath(values.Image)))
                 {
@@ -77,10 +89,10 @@ namespace rentaCar.Controllers
                 }
                 values.Image = "~/Image/no-image.png";
                 db.SaveChanges();
-                return RedirectToAction("Getcar/"+ values.Id,"GetCar");
+                return RedirectToAction("Getcar/" + values.Id, "GetCar");
             }
 
-                return RedirectToAction("Getcar/" + values.Id,"GetCar");
+            return RedirectToAction("Getcar/" + values.Id, "GetCar");
         }
 
     }

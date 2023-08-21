@@ -11,11 +11,14 @@ namespace rentaCar.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Users
     {
         public int Id { get; set; }
+        [Required (ErrorMessage = "Kullanýcý Adýný Giriniz!")]
         public string UserName { get; set; }
+        [Required(ErrorMessage = "Parolayý Giriniz!")]
         public string UserPassword { get; set; }
     }
 }

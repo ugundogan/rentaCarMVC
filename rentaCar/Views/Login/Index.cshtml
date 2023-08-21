@@ -50,18 +50,24 @@
                             <div class="form-group">
                                 <label for="username" class="text-info">Username:</label><br>
                                 <input type="text" name="UserName" id="username" class="form-control">
+                                @Html.ValidationMessageFor(m => m.UserName)
                             </div>
                             <div class="form-group">
                                 <label for="password" class="text-info">Password:</label><br>
                                 <input type="password" name="UserPassword" id="password" class="form-control">
+                                @Html.ValidationMessageFor(m => m.UserPassword)
                             </div>
                             <div class="form-group">
                                 @*<label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>*@
-                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                                <input type="submit" onclick="logincontrol()" name="submit" class="btn btn-info btn-md" value="submit">
+                                @if (ViewBag != null)
+                                {
+                                    <span style="color:red">@ViewBag.message</span>
+                                }
                             </div>
                             @*<div id="register-link" class="text-right">
-                                <a href="#" class="text-info">Register here</a>
-                            </div>*@
+                                    <a href="#" class="text-info">Register here</a>
+                                </div>*@
                         </form>
                     </div>
                 </div>
@@ -71,3 +77,4 @@
 </body>
 
 </html>
+
