@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +13,17 @@ namespace rentaCar.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
+        public string SHA256Hash(string text)
+        {
+            string source = text;
+            using (SHA256 sha1Hash = SHA256.Create())
+            {
+                byte[] sourceBytes = Encoding.UTF8.GetBytes(source);
+                byte[] hashBytes = sha1Hash.ComputeHash(sourceBytes);
+                string hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+                return (hash);
+            }
+        }
         rentaCarEntities db = new rentaCarEntities();
         // GET: Login
         [HttpGet]
@@ -27,11 +39,7 @@ namespace rentaCar.Controllers
             {
                 return View("Index");
             }
-            var preBase64 = user.UserPassword;
-            var encodedBytes = Encoding.UTF8.GetBytes(preBase64);
-            var password = Convert.ToBase64String(encodedBytes);
-            //var decodedBytes = Convert.FromBase64String(user.UserPassword);
-            //var originalPassword = Encoding.UTF8.GetString(decodedBytes);
+            var password = SHA256Hash(user.UserPassword);
             var userinfo = db.Users.FirstOrDefault(x=>x.UserName == user.UserName && x.UserPassword == password);
             if (userinfo != null)
             {

@@ -57,9 +57,9 @@ namespace rentaCar.Controllers
                 WebImage img = new WebImage(car.ImageFile.InputStream);
                 FileInfo imginfo = new FileInfo(car.ImageFile.FileName);
                 string filename = car.ImageFile.FileName;
-                img.Save("~/Image/" + filename);
+                img.Save("/Image/" + filename);
 
-                values.Image = "~/Image/" + filename;
+                values.Image = "/Image/" + filename;
             }
 
             values.LicensePlate = car.LicensePlate;
@@ -87,7 +87,7 @@ namespace rentaCar.Controllers
                 {
                     System.IO.File.Delete(Server.MapPath(values.Image));
                 }
-                values.Image = "~/Image/no-image.png";
+                values.Image = "/Image/no-image.png";
                 db.SaveChanges();
                 return RedirectToAction("Getcar/" + values.Id, "GetCar");
             }

@@ -34,8 +34,8 @@ namespace rentaCar.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(car.ImageFile.FileName);
                 string extension = Path.GetExtension(car.ImageFile.FileName);
                 fileName = fileName + extension;
-                car.Image = "~/Image/" + fileName;
-                fileName = Path.Combine(Server.MapPath("~/Image/"), fileName);
+                car.Image = "/Image/" + fileName;
+                fileName = Path.Combine(Server.MapPath("/Image/"), fileName);
                 car.ImageFile.SaveAs(fileName);
             }
             car.RentState = 1;
