@@ -17,7 +17,8 @@
         @grid.GetHtml(
              tableStyle: "table-bordered col-md-12 text-center",
              columns: grid.Columns(
-                     grid.Column(format: @<a href="@item.Image"  class="demo" data-lightbox="example-1"><img src="@Href(item.Image)" class="example-image" width="100" height="100" /></a> ),
+                     grid.Column(format: @<a href="@item.Image" class="demo" 
+                                             -lightbox="example-1"><img src="@Href(item.Image)" class="example-image" width="100" height="100" /></a> ),
 grid.Column("Id", "ID"),
 grid.Column("LicensePlate", "Plaka"),
 grid.Column("Brand", "Marka"),
@@ -201,7 +202,7 @@ grid.Column("Sil", format: @<text> <a href="/Cars/DeleteCar/@item.Id" class="btn
             return false;
         }
     }
-    
+
 </script>
 
 

@@ -48,7 +48,8 @@
             let startdate = $("#startdate").val();
             let finishdate = $("#finishdate").val();
             $.ajax({
-                dataType: "json",
+                
+                Type: "json",
                 type: "post",
                 url: "/AvailableCars/getAvailableCars/",
                 data: {

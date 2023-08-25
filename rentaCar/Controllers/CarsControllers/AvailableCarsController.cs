@@ -105,11 +105,12 @@ namespace rentaCar.Controllers.CarsControllers
                     (startDate >= r.RentalDate && startDate <= r.ReturnDate) ||
                     (finishDate >= r.RentalDate && finishDate <= r.ReturnDate))
                 select c.Id;
+            var xx = rentedCarIdsQuery.ToList();
 
             var query =
                 from c in db.cars
                 where !rentedCarIdsQuery.Contains(c.Id) ||
-                      (c.RentState == 1 && !db.rent.Any(r => r.CarId == c.Id))
+                      !db.rent.Any(r => r.CarId == c.Id && c.RentState == 1)
                 select c;
 
             var availableCars = query.ToList();
