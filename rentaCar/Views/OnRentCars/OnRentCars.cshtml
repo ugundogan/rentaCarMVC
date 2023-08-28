@@ -1,9 +1,6 @@
 ﻿@using rentaCar.Models.Entities;
-@using DayPilot.Web.Mvc;
-@using DayPilot.Web.Mvc.Events.Calendar
-@using ViewType = DayPilot.Web.Mvc.Enums.Calendar.ViewType
 
-@model List<cars>
+@model rentaCar.Models.Entities.rent
 @{
     ViewBag.Title = "OnRentCars";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -13,7 +10,7 @@
     <div class="container col-md-6">
         <canvas id="pieChart" style="width:100%;max-width:700px"></canvas>
     </div>
-    <div class="container col-md-6" >
+    <div class="container col-md-6">
         <canvas id="pieChart2" style="width:100%;max-width:700px"></canvas>
     </div>
 </div>
@@ -29,6 +26,55 @@
             </div>
             <div class="modal-body">
                 <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="/NewRent/NewRent" method="post">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Kiralama Tarihi</label>
+                        <div class="col-sm-5">
+                            <input type="datetime-local" class="form-control" name="RentalDate" id="startdate"  onselect="" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Dönüş Tarihi</label>
+                        <div class="col-sm-5">
+                            <input type="datetime-local" class="form-control" name="ReturnDate" id="finishdate" />
+                        </div>
+                        <button type="button" id="sorgula" class="btn btn-primary">Araç Sorgula</button>
+                    </div>
+                    <div class="from-group" id="getCar"></div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Müşteri</label>
+                        <div class="col-sm-5">
+                            @Html.DropDownListFor(m => m.customers.Id, (List<SelectListItem>)ViewBag.valueCustomer, new { @class = "form-control" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Not</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="Note" />
+                        </div>
+                    </div>
+                    <input type="hidden" value="4" name="CarId" id="CarId" />
+
+                    <button class="btn btn-success">Kaydet</button>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-dismiss="modal">Kapat</button>
@@ -79,24 +125,27 @@
 </script>
 <script>
     $(document).ready(function () {
+
         var rents = [];
+        var selectedRent = null;
         $.ajax({
             type: 'GET',
             url: '/Calendar/GetRent',
             success: function (data) {
-                
+
                 $.each(JSON.parse(data), function (i, v) {
                     rents.push({
-                        title: v.CarId,
+                        title: v.cars.LicensePlate,
                         start: moment(v.RentalDate),
-                        end: moment(v.ReturnDate)
+                        end: moment(v.ReturnDate),
+                        description: v.Note
                     })
                 })
                 console.log(data);
                 GenareteCalender(rents);
             }
         })
-        
+
         function GenareteCalender(rents) {
             $('#calendar').fullCalendar({
                 header: {
@@ -104,21 +153,43 @@
                     center: 'title',
                     right: 'month, agendaWeek, agendaDay'
                 },
-                selectable: true,
-                selectHelper: true,
                 defaultView: 'month',
-                editable: true,
+                editable: false,
                 events: rents,
-                eventClick: function (calEvent) {
+                eventClick: function (calEvent, jsEvent, view) {
+                    selectedRent = calEvent;
                     $('#myModal #eventTitle').text(calEvent.title);
                     var $description = $('<div/>');
-                    $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MM-YYYY HH:mm a")));
-                    $description.append($('<p/>').html('<b>Finish:</b>' + calEvent.end.format("DD-MM-YYYY HH:mm a")));
+                    $description.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("YYYY-MM-DD HH:mm a")));
+                    $description.append($('<p/>').html('<b>Finish:</b>' + calEvent.end.format("YYYY-MM-DD HH:mm a")));
+                    $description.append($('<p/>').html('<b>Note:</b>' + calEvent.description));
+
+
                     $('#myModal #pDetails').empty().html($description);
 
                     $('#myModal').modal();
+                },
+                selectable: true,
+                select: function (start, end) {
+                    selectedRent = {
+                        start: start,
+                        end: end
+                    };
+                    openAddForm();
+                    $('#calendar').fullCalendar('unselect');
                 }
             })
+        }
+
+        function openAddForm() {
+            if (selectedRent != null) {
+                $('#startdate').val(selectedRent.start.format('YYYY-MM-DD') + 'T' + selectedRent.start.format('HH:mm'));
+                $('#finishdate').val(selectedRent.end.format('YYYY-MM-DD') + 'T' + selectedRent.end.format('HH:mm'));
+                console.log(selectedRent.end.format('YYYY-MM-DD') + 'T' + selectedRent.end.format('HH:mm'));
+                console.log(selectedRent.end.format('YYYY-MM-DD HH:mm a'));
+            }
+            $('#myModal').modal('hide');
+            $('#myModalSave').modal();
         }
 
 
@@ -127,3 +198,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script src="https://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"></script>
+<script>
+
+    function updateCarId(valuex) {
+        $("#CarId").val(valuex);
+        $("tr").removeClass("bg-success");
+        $("#" + valuex).addClass("bg-success");
+
+    }
+
+    $("#sorgula").click(x => {
+        let startdate = $("#startdate").val();
+        let finishdate = $("#finishdate").val();
+
+        $.ajax({
+            dataType: "json",
+            type: "get",
+            url: "/AvailableCars/getAvailableCars/",
+            data: {
+                d1: startdate,
+                d2: finishdate
+            },
+            success: function (func) {
+
+                let w = jQuery.parseJSON(func);
+                console.log(w);
+                let tablehtml = "<table class= table table-bordered> <tr><th>ID</th><th>Plaka</th> <th>MARKA</th><th>MODEL</th><th>YIL</th><th>COLOR</th><th>KM</th><th>ARAÇ TİPİ</th><th>GÜNLÜK ÜCRET</th><th>SEÇ</th></tr>";
+                $.each(w, (index, value) => {
+                    tablehtml += `<tr id=${value.Id} ><td>${value.Id}</td><td>${value.LicensePlate}</td><td>${value.Brand}</td><td>${value.Model}</td><td>${value.ProductYear}</td><td>${value.Color}</td><td>${value.km}</td><td>${value.CarType}</td><td>${value.DailyPrice}</td><td><a type href=# onclick=updateCarId(${value.Id})>Seç</a></td></tr>`
+                });
+                tablehtml += "</table>";
+                $("#getCar").html(tablehtml);
+            }
+        })
+        console.log(startdate);
+    });
+</script>

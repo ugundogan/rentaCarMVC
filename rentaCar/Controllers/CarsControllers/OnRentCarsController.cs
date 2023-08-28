@@ -14,6 +14,23 @@ namespace rentaCar.Controllers.CarsControllers
         // GET: OnRentCars
         public ActionResult OnRentCars()
         {
+            List<SelectListItem> valuesCar = (from i in db.cars.ToList()
+                                              select new SelectListItem
+                                              {
+                                                  Text = i.LicensePlate,
+                                                  Value = i.Id.ToString(),
+                                              }).ToList();
+            ViewBag.valueCar = valuesCar;
+            List<SelectListItem> valuesCustomer = (from i in db.customers.ToList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = i.FullName,
+                                                       Value = i.Id.ToString(),
+                                                   }).ToList();
+            ViewBag.valueCustomer = valuesCustomer;
+
+            //var values = db.cars.ToList();
+            //ViewBag.values = values;
             var values = db.cars.ToList();
             var aa = from c in db.cars
                      where (c.RentState == 1)
@@ -28,8 +45,7 @@ namespace rentaCar.Controllers.CarsControllers
             var rentedCarIdsQuery =
                 from c in db.cars
                 join r in db.rent on c.Id equals r.CarId into rentedCars
-                where rentedCars.Any(r =>
-                    (DateTime.Now >= r.RentalDate && DateTime.Now <= r.ReturnDate))
+                where rentedCars.Any(r => r.CarId == c.Id)
                 select c;
             var w = rentedCarIdsQuery.Count();
 
@@ -45,7 +61,7 @@ namespace rentaCar.Controllers.CarsControllers
             ViewBag.b = b;
             ViewBag.c = w;
             ViewBag.d = y;
-            return View(values);
+            return View();
         }
     }
 }

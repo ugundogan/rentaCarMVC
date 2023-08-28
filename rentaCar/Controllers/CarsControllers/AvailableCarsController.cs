@@ -112,8 +112,8 @@ namespace rentaCar.Controllers.CarsControllers
                 where !rentedCarIdsQuery.Contains(c.Id) ||
                       !db.rent.Any(r => r.CarId == c.Id && c.RentState == 1)
                 select c;
-
-            var availableCars = query.ToList();
+            
+            var availableCars = query.Where(r=> r.RentState == 1);
 
 
             ViewBag.values = availableCars;
@@ -154,9 +154,10 @@ namespace rentaCar.Controllers.CarsControllers
                     c.km,
                     c.CarType,
                     c.DailyPrice,
+                    c.RentState
                 };
 
-            var availableCars = query.ToList();
+            var availableCars = query.Where(r=> r.RentState == 1);
             ViewBag.values = availableCars.ToList();
 
             var jsonValues = JsonConvert.SerializeObject(query);

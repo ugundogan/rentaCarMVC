@@ -15,6 +15,24 @@ namespace rentaCar.Controllers
         // GET: Calendar
         public JsonResult GetRent()
         {
+            List<SelectListItem> valuesCar = (from i in db.cars.ToList()
+                                              select new SelectListItem
+                                              {
+                                                  Text = i.LicensePlate,
+                                                  Value = i.Id.ToString(),
+                                              }).ToList();
+            ViewBag.valueCar = valuesCar;
+            List<SelectListItem> valuesCustomer = (from i in db.customers.ToList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = i.FullName,
+                                                       Value = i.Id.ToString(),
+                                                   }).ToList();
+            ViewBag.valueCustomer = valuesCustomer;
+
+            var values = db.cars.ToList();
+            ViewBag.values = values;
+
             var rents = db.rent.ToList();
 
             JsonSerializerSettings jss = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
