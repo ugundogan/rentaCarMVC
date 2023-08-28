@@ -60,7 +60,7 @@ namespace rentaCar.Controllers.CarsControllers
             ViewBag.a = a;
             ViewBag.b = b;
             ViewBag.c = w;
-            ViewBag.d = y;
+            ViewBag.d = a - y;
             return View();
         }
     }
